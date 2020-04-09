@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro"
+       name="ur5e" >
+
+  <!-- common stuff -->
+  <xacro:include filename="$(find ur_e_description)/urdf/common.gazebo.xacro" />
+
+  <!-- ur5e -->
+  <xacro:include filename="$(find ur_e_description)/urdf/ur5e.urdf.xacro" />
+
+  <!-- arm -->
+  <xacro:ur5e_robot prefix="" joint_limited="false"/>
+
+  <link name="world" />
+
+  <joint name="world_joint" type="fixed">
+    <parent link="world" />
+    <child link = "base_link" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+  </joint>
+
+  <!-- gripper -->
+  <xacro:include filename="$(find robot_description)/urdf/robotiq_arg2f_85_model.xacro" />
+
+  <joint name="gripper_joint" type="fixed">
+    <parent link="tool0" />
+    <child link = "robotiq_arg2f_base_link" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+  </joint>
+
+  <link name="tcp" />
+  
+  <joint name="tcp_joint" type="fixed">
+    <parent link="robotiq_arg2f_base_link" />
+    <child link = "tcp" />
+    <origin xyz="0.0 0.0 0.15" rpy="0.0 0.0 0.0" />
+  </joint>
+
+  <!-- kinect -->
+
+  <xacro:include filename="$(find robot_description)/urdf/kinect.xacro" />
+
+  <xacro:property name="kinect_offset_x" value="0.5" />
+  <xacro:property name="kinect_offset_y" value="0" />
+  <xacro:property name="kinect_offset_z" value="0.75" />
+
+  <joint name="kinect_frame_joint" type="fixed">
+      <origin xyz="${kinect_offset_x} ${kinect_offset_y} ${kinect_offset_z}" rpy="0 ${3.1415926/2} 0" />
+      <parent link="world"/>
+      <child link="camera_link"/>
+  </joint>
+  <xacro:kinect_camera prefix="camera"/>
+
+</robot>

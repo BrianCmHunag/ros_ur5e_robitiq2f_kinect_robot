@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: robot_description
+    relative_path: urdf/ur5e_robot_kinect_gripper.urdf.xacro
+    xacro_args: "--inorder "
+  SRDF:
+    relative_path: config/ur5e.srdf
+  CONFIG:
+    author_name: Brain.cm.huang
+    author_email: iles88039@gmail.com
+    generated_timestamp: 1586401697
